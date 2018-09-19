@@ -17,6 +17,7 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }
