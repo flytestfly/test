@@ -8,7 +8,12 @@ use Cviebrock\EloquentSluggable\Sluggable;
 class Event extends Model
 {
 	use Sluggable;
-	
+
+
+	protected $fillable = [
+        'title'
+    ];
+
 
    	public function tests()
     {
@@ -27,6 +32,26 @@ class Event extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public static function add($fields)
+    {
+        $event = new static;
+        $event = fill($fields);
+        $event = save();
+
+        return $event;
+    }
+
+    public function edit($fields)
+    {
+        $this->fill($fields);
+        $this = save();
+    }
+
+    public function remove()
+    {
+        $this = delete();
     }
 
 }

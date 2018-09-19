@@ -20,4 +20,23 @@ class Answer extends Model
     {
     	return $this->hasOne(Answers_option::class);
     }
+
+    public static function add()
+    {
+        $answer = new static;
+        $answer = save();
+
+        return $answer;
+    }
+
+    public function edit($fields)
+    {
+        $this->fill($fields);
+        $this = save();
+    }
+
+    public function remove()
+    {
+        $this = delete();
+    }
 }

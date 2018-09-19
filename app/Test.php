@@ -15,7 +15,9 @@ class Test extends Model
     const IS_STANDART = 0;
     const IS_FEATURED = 1;
 
-    protected $fillable = ['title', 'content', 'description'];
+    protected $fillable = [
+        'title', 'content', 'description'
+    ];
 
 	public function author()
     {
@@ -77,6 +79,11 @@ class Test extends Model
         $image->saveAs('uploads', $filename);
         $this->image = $filename;
         $this->save();
+    }
+
+    public function removeImage($image)
+    {   
+        Storage::delete('uploads/' . $this->image);
     }
 
     public function getImage()
