@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('is_admin')->default(0);
             $table->integer('status')->default(0);
-            // Добавить аватар
+            $table->string('avatar');
             $table->rememberToken();
             $table->timestamps();
         });

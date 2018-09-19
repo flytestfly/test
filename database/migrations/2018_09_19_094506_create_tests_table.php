@@ -18,8 +18,7 @@ class CreateTestsTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('content');
-            // Добавить картинку
-            // Изменить тип description
+            $table->string('image');
             $table->text('description');
             $table->integer('event_id');
             $table->integer('user_id')->nullable();
