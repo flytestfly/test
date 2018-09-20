@@ -18,7 +18,7 @@ class CreateTestsTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('content');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->text('description');
             $table->integer('event_id');
             $table->integer('user_id')->nullable();

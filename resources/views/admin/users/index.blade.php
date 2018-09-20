@@ -27,30 +27,39 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="form-group">
-                <a href="{{route('events.create')}}" class="btn btn-success">Добавить</a>
+                <a href="{{route('users.create')}}" class="btn btn-success">Добавить</a>
               </div>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Название</th>
+                  <th>Имя</th>
+                  <th>E-mail</th>
+                  <th>Аватар</th>
                   <th>Действия</th>
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach($events as $event)
-                    <tr>
-                      <td>{{$event->id}}</td>
-                      <td>{{$event->title}}</td>
-                      <td><a href="{{route('events.edit', $event->id)}}" class="fa fa-pencil"></a>
-                        {!! Form::open(['route' => ['events.destroy', $event->id], 'method' => 'delete' ])!!}
-                        <button onclick="return confirm('Вы действительно хотите удалить это мероприятие?')" type="submit" class="delete"> 
+				        @foreach($users as $user)
+	                <tr>
+	                  <td>{{$user->id}}</td>
+	                  <td>{{$user->name}}</td>
+	                  <td>{{$user->email}}</td>
+	                  <td>
+	                    <img src="{{$user->getAvatar()}}" alt="" class="img-responsive" width="150">
+	                  </td>
+	                  <td>
+	                  	<a href="{{route('users.edit', $user->id)}}" class="fa fa-pencil"></a>
+
+                        {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete' ])!!}
+                        <button onclick="return confirm('Вы действительно хотите удалить этого пользователя?')" type="submit" class="delete"> 
                           <a class="fa fa-remove"></a>
                         </button>
                         {!! Form::close() !!}
-                      </td>
-                    </tr>  
-                  @endforeach
+
+	                  </td>
+	                </tr>
+                @endforeach
                 </tfoot>
               </table>
             </div>
