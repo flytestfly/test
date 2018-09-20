@@ -46,12 +46,12 @@ class Event extends Model
     public function edit($fields)
     {
         $this->fill($fields);
-        $this = save();
+        $this->save();
     }
 
     public function remove()
     {
-        $this = delete();
+        $this->delete();
     }
 
 }
