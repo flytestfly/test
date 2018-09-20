@@ -27,7 +27,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="form-group">
-                <a href="create.html" class="btn btn-success">Добавить</a>
+                <a href="{{route('events.create')}}" class="btn btn-success">Добавить</a>
               </div>
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -42,7 +42,20 @@
                     <tr>
                       <td>{{$event->id}}</td>
                       <td>{{$event->title}}</td>
-                      <td><a href="edit.html" class="fa fa-pencil"></a> <a href="#" class="fa fa-remove"></a></td>
+                      <td><a href="{{route('events.edit', $event->id)}}" class="fa fa-pencil"></a>
+                        {!! Form::open([
+                                  'route' => [
+                                    'events.destroy',
+                                    $event->id
+                                  ],
+                                  'method' => 'delete'
+                                ])
+                        !!}
+                        <button onclick="return confirm('Вы действительно хотите удалить это мероприятие?')" type="submit" class="delete"> 
+                          <a class="fa fa-remove"></a>
+                        </button>
+                        {!! Form::close() !!}
+                      </td>
                     </tr>  
                   @endforeach
                 </tfoot>

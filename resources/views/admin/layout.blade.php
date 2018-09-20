@@ -9,6 +9,19 @@
 
   <link rel="stylesheet" href="/css/admin.css">
 
+  <style>
+    table.table form {
+      display: inline-block;
+    }
+
+    button.delete {
+      background: transparent;
+      border: none;
+      color: #337ab7;
+      padding: 0px;
+    }
+  </style>
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -208,8 +221,8 @@
             <i class="fa fa-dashboard"></i> <span>Админ-панель</span>
           </a>
         </li>
+        <li><a href="{{route('events.index')}}"><i class="fa fa-list-ul"></i> <span>Мероприятия</span></a></li>
         <li><a href="#"><i class="fa fa-sticky-note-o"></i> <span>Посты</span></a></li>
-        <li><a href="#"><i class="fa fa-list-ul"></i> <span>Категории</span></a></li>
         <li><a href="#"><i class="fa fa-tags"></i> <span>Теги</span></a></li>
         <li>
           <a href="#">
