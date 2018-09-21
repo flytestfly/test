@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -16,17 +17,17 @@ class Test extends Model
     const IS_FEATURED = 1;
 
     protected $fillable = [
-        'title', 'content', 'description'
+        'title', 'content', 'date', 'event_id'
     ];
 
 	public function author()
     {
-    	return $this->hasOne(User::class);
+    	return $this->belongsTo(User::class, 'user_id');
     }
 
     public function event()
     {
-    	return $this->hasOne(Event::class);
+    	return $this->belongsTo(Event::class);
     }
 
     public function questions()
@@ -51,9 +52,9 @@ class Test extends Model
     public static function add($fields)
     {
         $test = new static;
-        $test = fill($fields);
+        $test->fill($fields);
         $test->user_id = 1;
-        $test = save();
+        $test->save();
 
         return $test;
     }
@@ -61,29 +62,32 @@ class Test extends Model
     public function edit($fields)
     {
         $this->fill($fields);
-        $this = save();
+        $this->save();
     }
 
     public function remove()
     {
-        Storage::delete('uploads/' . $this->image);
-        $this = delete();
+        $this->removeImage();
+        $this->delete();
     }
 
     public function uploadImage($image)
     {   
         if($image == null) { return; }
 
-        Storage::delete('uploads/' . $this->image);
+        $this->removeImage();
         $filename = str_random(10) . '.' . $image->extension();
-        $image->saveAs('uploads', $filename);
+        $image->storeAs('uploads', $filename);
         $this->image = $filename;
         $this->save();
     }
 
-    public function removeImage($image)
+    public function removeImage()
     {   
-        Storage::delete('uploads/' . $this->image);
+        if($this->image != null)
+        {
+            Storage::delete('uploads/' . $this->image);
+        }
     }
 
     public function getImage()
@@ -146,5 +150,26 @@ class Test extends Model
         }
 
         return $this->setFeatured();
+    }
+
+    public function setDateAttribute($value)
+    {
+       $date = Carbon::createFromFormat('d/m/y', $value)->format('Y-m-d');
+       
+       $this->attributes['date'] = $date;
+    }
+
+    public function getDateAttribute($value)
+    {
+       $date = Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+       
+       return $date;
+    }
+
+    public function getEventTitle()
+    {
+        return ($this->event != null)
+            ? $this->event->title
+            : 'Нет категории';
     }
 }
