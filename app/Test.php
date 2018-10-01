@@ -211,4 +211,9 @@ class Test extends Model
     {
         return self::all()->except($this->id);
     }
+
+    function hasEvent()
+    {
+        return $this->event != null ? true : false;
+    }
 }

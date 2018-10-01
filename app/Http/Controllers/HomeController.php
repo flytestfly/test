@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Test;
+use App\Event;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -15,7 +16,10 @@ class HomeController extends Controller
     public function index()
     {
         $tests = Test::paginate(3);
-/*        $tests = Test::all();*/
+        $popularTests = Test::orderBy('views', 'desc')->take(3)->get();
+        $featuredTests = Test::where('is_featured', 1)->take(3)->get();
+        $recentTests = Test::orderBy('date', 'desc')->take(4)->get();
+        dd($recentTests);
 
         return view('pages.index', compact('tests'));
     }
@@ -57,7 +61,7 @@ class HomeController extends Controller
     public function event($slug)
     {
         $event = Event::where('slug', $slug)->firstOrFail();
-        $tests = $event->tests;
+        $tests = $event->tests()->paginate(2);
 
         return view('pages.list', compact('tests'));
     }
