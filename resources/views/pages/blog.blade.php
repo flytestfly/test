@@ -6,14 +6,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                @foreach($tests as $test)
                 <article class="post">
                     <div class="post-thumb">
-                        <a href="blog.html"><img src="{{$test->getImage()}}" alt=""></a>
-
-                        <a href="{{route('test.blog', $test->slug)}}" class="post-thumb-overlay text-center">
-                            <div class="text-uppercase text-center">Пройти тест</div>
-                        </a>
+                        <a href="{{route('test.blog', $test->slug)}}"><img src="{{$test->getImage()}}" alt=""></a>
                     </div>
                     <div class="post-content">
                         <header class="entry-header text-center text-uppercase">
@@ -25,15 +20,16 @@
                         </header>
                         <div class="entry-content">
                             <p>
-                                {!!$test->description!!}
+                            	{!!$test->content!!}
                             </p>
-
-                            <div class="btn-continue-reading text-center text-uppercase">
-                                <a href="{{route('test.blog', $test->slug)}}" class="more-link">Пройти тест</a>
-                            </div>
                         </div>
+                        <div class="decoration">
+                            <a href="#" class="btn btn-default">Decoration</a>
+                            <a href="#" class="btn btn-default">Decoration</a>
+                        </div>
+
                         <div class="social-share">
-                            <span class="social-share-title pull-left text-capitalize">Автор <a href="#">Дорошенко М.В.</a> {{$test->getDate()}}</span>
+							<span class="social-share-title pull-left text-capitalize">Автор <a href="#">Дорошенко М.В.</a> {{$test->getDate()}}</span>
                             <ul class="text-center pull-right">
                                 <li><a class="s-facebook" href="#"><i class="fa fa-facebook"></i></a></li>
                                 <li><a class="s-twitter" href="#"><i class="fa fa-twitter"></i></a></li>
@@ -44,13 +40,123 @@
                         </div>
                     </div>
                 </article>
-                @endforeach
+                <div class="top-comment"><!--top comment-->
+                    <img src="/images/comment.jpg" class="pull-left img-circle" alt="">
+                    <h4>Rubel Miah</h4>
 
-                {{$tests->links()}}
+                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy hello ro mod tempor
+                        invidunt ut labore et dolore magna aliquyam erat.</p>
+                </div><!--top comment end-->
+                <div class="row"><!--blog next previous-->
+                    <div class="col-md-6">
+                    	@if($test->hasPrevious())
+                        <div class="single-blog-box">
+                            <a href="{{route('test.blog', $test->getPrevious()->slug)}}">
+                                <img src="{{$test->getPrevious()->getImage()}}" alt="">
+
+                                <div class="overlay">
+
+                                    <div class="promo-text">
+                                        <p><i class=" pull-left fa fa-angle-left"></i></p>
+                                        <h5>{{$test->getPrevious()->title}}</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="col-md-6">
+                    	@if($test->hasNext())
+                        <div class="single-blog-box">
+                            <a href="{{route('test.blog', $test->getNext()->slug)}}">
+                                <img src="{{$test->getNext()->getImage()}}" alt="">
+
+                                <div class="overlay">
+                                    <div class="promo-text">
+                                        <p><i class=" pull-right fa fa-angle-right"></i></p>
+                                        <h5>{{$test->getNext()->title}}</h5>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        @endif
+                    </div>
+                </div><!--blog next previous end-->
+                <div class="related-post-carousel"><!--related post carousel-->
+                    <div class="related-heading">
+                        <h4>You might also like</h4>
+                    </div>
+                    <div class="items">
+                    	@foreach($test->related() as $item)
+                        <div class="single-item">
+                            <a href="{{route('test.blog', $item->slug)}}">
+                                <img src="{{$item->getImage()}}" alt="">
+
+                                <p>{{$item->title}}</p>
+                            </a>
+                        </div>
+                        @endforeach
+                    </div>
+                </div><!--related post carousel-->
+                <div class="bottom-comment"><!--bottom comment-->
+                    <h4>3 comments</h4>
+
+                    <div class="comment-img">
+                        <img class="img-circle" src="/images/comment-img.jpg" alt="">
+                    </div>
+
+                    <div class="comment-text">
+                        <a href="#" class="replay btn pull-right"> Replay</a>
+                        <h5>Rubel Miah</h5>
+
+                        <p class="comment-date">
+                            December, 02, 2015 at 5:57 PM
+                        </p>
+
+
+                        <p class="para">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                            diam nonumy
+                            eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                            voluptua. At vero eos et cusam et justo duo dolores et ea rebum.</p>
+                    </div>
+                </div>
+                <!-- end bottom comment-->
+
+
+                <div class="leave-comment"><!--leave comment-->
+                    <h4>Leave a reply</h4>
+
+
+                    <form class="form-horizontal contact-form" role="form" method="post" action="#">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" id="email" name="email"
+                                       placeholder="Email">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" id="subject" name="subject"
+                                       placeholder="Website url">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+										<textarea class="form-control" rows="6" name="message"
+                                                  placeholder="Write Massage"></textarea>
+                            </div>
+                        </div>
+                        <a href="#" class="btn send-btn">Post Comment</a>
+                    </form>
+                </div><!--end leave comment-->
             </div>
             <div class="col-md-4" data-sticky_column>
                 <div class="primary-sidebar">
-                    
                     <aside class="widget news-letter">
                         <h3 class="widget-title text-uppercase text-center">Get Newsletter</h3>
 
@@ -148,10 +254,10 @@
 
                         <div class="thumb-latest-posts">
 
-
                             <div class="media">
                                 <div class="media-left">
                                     <a href="#" class="popular-img"><img src="/images/r-p.jpg" alt="">
+
                                         <div class="p-overlay"></div>
                                     </a>
                                 </div>
@@ -167,6 +273,7 @@
                             <div class="media">
                                 <div class="media-left">
                                     <a href="#" class="popular-img"><img src="/images/r-p.jpg" alt="">
+
                                         <div class="p-overlay"></div>
                                     </a>
                                 </div>
@@ -182,6 +289,7 @@
                             <div class="media">
                                 <div class="media-left">
                                     <a href="#" class="popular-img"><img src="/images/r-p.jpg" alt="">
+
                                         <div class="p-overlay"></div>
                                     </a>
                                 </div>
@@ -197,6 +305,7 @@
                             <div class="media">
                                 <div class="media-left">
                                     <a href="#" class="popular-img"><img src="/images/r-p.jpg" alt="">
+
                                         <div class="p-overlay"></div>
                                     </a>
                                 </div>
@@ -235,6 +344,41 @@
                                 <span class="post-count pull-right"> (2)</span>
                             </li>
                         </ul>
+                    </aside>
+                    <aside class="widget pos-padding">
+                        <h3 class="widget-title text-uppercase text-center">Follow@Instagram</h3>
+
+                        <div class="instragram-follow">
+                            <a href="#">
+                                <img src="/images/ins-flow.jpg" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="/images/ins-flow.jpg" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="/images/ins-flow.jpg" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="/images/ins-flow.jpg" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="/images/ins-flow.jpg" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="/images/ins-flow.jpg" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="/images/ins-flow.jpg" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="/images/ins-flow.jpg" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="/images/ins-flow.jpg" alt="">
+                            </a>
+
+                        </div>
+
                     </aside>
                 </div>
             </div>

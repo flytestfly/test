@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Test;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,7 +14,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.index');
+        $tests = Test::paginate(3);
+/*        $tests = Test::all();*/
+
+        return view('pages.index', compact('tests'));
     }
 
     /**
@@ -43,9 +47,19 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $test = Test::where('slug', $slug)->firstOrFail();
+
+        return view('pages.blog', compact('test'));
+    }
+
+    public function event($slug)
+    {
+        $event = Event::where('slug', $slug)->firstOrFail();
+        $tests = $event->tests;
+
+        return view('pages.list', compact('tests'));
     }
 
     /**

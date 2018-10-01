@@ -43,7 +43,7 @@
               {{Form::select(
               'event_id', 
                 $events,
-                  $test->event->id,
+                  $test->getEventID(),
                     ['class' => 'form-control select2'])}}
             </div>
             <!-- Date -->
@@ -78,6 +78,12 @@
               </label>
             </div>
           </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Описание</label>
+              <textarea name="description" id="" cols="30" rows="10" class="form-control">{{$test->description}}</textarea>
+          </div>
+        </div>
           <div class="col-md-12">
             <div class="form-group">
               <label for="exampleInputEmail1">Полный текст</label>

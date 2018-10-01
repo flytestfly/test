@@ -17,7 +17,7 @@ class Test extends Model
     const IS_FEATURED = 1;
 
     protected $fillable = [
-        'title', 'content', 'date', 'event_id'
+        'title', 'content', 'date', 'description', 'event_id'
     ];
 
 	public function author()
@@ -154,14 +154,14 @@ class Test extends Model
 
     public function setDateAttribute($value)
     {
-       $date = Carbon::createFromFormat('d/m/y', $value)->format('Y-m-d');
+       $date = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
        
        $this->attributes['date'] = $date;
     }
 
     public function getDateAttribute($value)
     {
-       $date = Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+       $date = Carbon::createFromFormat('Y-m-d', $value)->format('d/m/Y');
        
        return $date;
     }
@@ -171,5 +171,44 @@ class Test extends Model
         return ($this->event != null)
             ? $this->event->title
             : 'Нет категории';
+    }
+
+    function getEventID()
+    {
+        return $this->event != null ? $this->event->id : null;
+    }
+
+    function getDate()
+    {
+       return Carbon::createFromFormat('d/m/Y', $this->date)->format('F d, Y');
+    }
+
+    function hasPrevious()
+    {
+        return self::where('id', '<', $this->id)->max('id');
+    }
+
+    function getPrevious()
+    {
+        $testID = $this->hasPrevious();
+
+        return self::find($testID);
+    }
+
+    function hasNext()
+    {
+        return self::where('id', '>', $this->id)->min('id');
+    }
+
+    function getNext()
+    {
+        $testID = $this->hasNext();
+
+        return self::find($testID);
+    }
+
+    function related()
+    {
+        return self::all()->except($this->id);
     }
 }

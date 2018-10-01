@@ -21,7 +21,7 @@ class CreateTestsTable extends Migration
             $table->date('date')->nullable();
             $table->string('image')->nullable();
             $table->text('description')->nullable();
-            $table->integer('event_id');
+            $table->integer('event_id')->nullable();
             $table->integer('user_id')->nullable();
             $table->integer('status')->default(0);
             $table->integer('views')->default(0);

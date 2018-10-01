@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('main');
+Route::get('/test/{slug}', 'HomeController@show')->name('test.blog');
+Route::get('/event/{slug}', 'HomeController@event')->name('event.blog');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function(){
-	Route::get('/', 'DashboardController@index');
+	Route::get('/', 'DashboardController@index')->name('main.admin');
 	Route::resource('/events', 'EventsController');
 	Route::resource('/users', 'UsersController');
 	Route::resource('/tests', 'TestsController');

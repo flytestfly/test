@@ -1,7 +1,12 @@
       <ul class="sidebar-menu">
         <li class="header">ГЛАВНОЕ МЕНЮ</li>
         <li class="treeview">
-          <a href="#">
+          <a href="{{route('main')}}" target="_blank">
+            <i class="fa fa-arrow-right"></i> <span>Сайт</span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="{{route('main.admin')}}">
             <i class="fa fa-dashboard"></i> <span>Админ-панель</span>
           </a>
         </li>
