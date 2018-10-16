@@ -19,7 +19,6 @@ class HomeController extends Controller
         $popularTests = Test::orderBy('views', 'desc')->take(3)->get();
         $featuredTests = Test::where('is_featured', 1)->take(3)->get();
         $recentTests = Test::orderBy('date', 'desc')->take(4)->get();
-        dd($recentTests);
 
         return view('pages.index', compact('tests'));
     }
